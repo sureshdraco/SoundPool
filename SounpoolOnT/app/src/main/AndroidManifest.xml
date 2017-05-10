@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,8 +18,8 @@
             android:value="@integer/google_play_services_version" />
 
 
-        <activity android:name=".All"
-            android:screenOrientation="portrait">
+        <activity android:name=".AActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,21 +27,10 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name=".AActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".BActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
     </application>
-
 
 </manifest>

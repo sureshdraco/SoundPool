@@ -9,15 +9,15 @@ import android.view.ViewGroup;
 /**
  * Created by Develop on 02.08.2016.
  */
-public class MyBFrag1 extends Fragment {
+public class MyBFrag3 extends Fragment {
 
-	public static MyBFrag1 newInstance() {
+	public static MyBFrag3 newInstance() {
 
-		MyBFrag1 fragment = new MyBFrag1();
+		MyBFrag3 fragment = new MyBFrag3();
 		return fragment;
 	}
 
-	public MyBFrag1() {
+	public MyBFrag3() {
 
 	}
 

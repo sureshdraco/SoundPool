@@ -9,22 +9,22 @@ import android.view.ViewGroup;
 /**
  * Created by Develop on 02.08.2016.
  */
-public class MyBFrag1 extends Fragment {
+public class MyAFrag3 extends Fragment {
 
-	public static MyBFrag1 newInstance() {
+	public static MyAFrag3 newInstance() {
 
-		MyBFrag1 fragment = new MyBFrag1();
+		MyAFrag3 fragment = new MyAFrag3();
 		return fragment;
 	}
 
-	public MyBFrag1() {
+	public MyAFrag3() {
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_b1, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_a1, container, false);
 		return rootView;
 	}
 
