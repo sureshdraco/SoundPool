@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_gravity="center_horizontal|top">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout4"
+            android:weightSum="1"
+            android:layout_marginTop="15dp">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b13"
+                android:id="@+id/button13"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b14"
+                android:id="@+id/button14"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b15"
+                android:id="@+id/button15"
+                android:background="@drawable/button_unpress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout6">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b16"
+                android:id="@+id/button16"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b17"
+                android:id="@+id/button17"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b18"
+                android:id="@+id/button18"
+                android:background="@drawable/button_unpress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b19"
+                android:id="@+id/button19"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b20"
+                android:id="@+id/button20"
+                android:background="@drawable/button_unpress" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b21"
+                android:id="@+id/button21"
+                android:background="@drawable/button_unpress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b22"
+                android:id="@+id/button22"
+                android:background="@drawable/stop" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:id="@+id/button11"
+                android:onClick="b23"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:background="@drawable/stop"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="109dp"
+                android:layout_height="106dp"
+                android:onClick="b24"
+                android:id="@+id/button24"
+                android:background="@drawable/stop" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
