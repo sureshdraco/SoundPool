@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:background="#ffffff"
-			  android:orientation="vertical">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff"
+	android:orientation="vertical">
 
 
 	<LinearLayout
@@ -23,25 +23,24 @@
 			android:orientation="horizontal">
 
 			<Button
-
 				android:id="@+id/button1"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button2"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button3"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 		</LinearLayout>
 
 		<LinearLayout
@@ -55,21 +54,21 @@
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button5"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button6"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 		</LinearLayout>
 
 		<LinearLayout
@@ -82,21 +81,21 @@
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button8"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 
 			<Button
 				android:id="@+id/button9"
 				style="?android:attr/buttonStyleSmall"
 				android:layout_width="109dp"
 				android:layout_height="106dp"
-				android:background="@drawable/buttonb_unpress"/>
+				android:background="@drawable/btn_b_normal_selector"/>
 		</LinearLayout>
 
 		<LinearLayout
@@ -104,32 +103,53 @@
 			android:layout_height="match_parent"
 			android:orientation="horizontal">
 
-			<Button
-				android:id="@+id/button10"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_width="109dp"
-				android:layout_height="106dp"
-				android:background="@drawable/stop2"/>
+			<RadioGroup
+				android:id="@+id/toggleGroup"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
 
-			<Button
-				android:id="@+id/button11"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_width="109dp"
-				android:layout_height="106dp"
-				android:background="@drawable/stop2"/>
+				<com.maximcedaroff.sounpoolont.ToggleableRadioButton
+					android:id="@+id/button10"
+					style="?android:attr/buttonStyleSmall"
+					android:layout_width="109dp"
+					android:layout_height="106dp"
+					android:background="@drawable/btn_toggle2"
+					android:button="@android:color/transparent"
+					android:text=""
+					android:textOff=""
+					android:textOn=""/>
 
-			<Button
-				android:id="@+id/button12"
-				style="?android:attr/buttonStyleSmall"
-				android:layout_width="109dp"
-				android:layout_height="106dp"
-				android:background="@drawable/stop2"/>
+				<com.maximcedaroff.sounpoolont.ToggleableRadioButton
+					android:id="@+id/button11"
+					style="?android:attr/buttonStyleSmall"
+					android:layout_width="109dp"
+					android:layout_height="106dp"
+					android:background="@drawable/btn_toggle2"
+					android:button="@android:color/transparent"
+					android:text=""
+					android:textOff=""
+					android:textOn=""/>
+
+				<com.maximcedaroff.sounpoolont.ToggleableRadioButton
+					android:id="@+id/button12"
+					style="?android:attr/buttonStyleSmall"
+					android:layout_width="109dp"
+					android:layout_height="106dp"
+					android:background="@drawable/btn_toggle2"
+					android:button="@android:color/transparent"
+					android:text=""
+					android:textOff=""
+					android:textOn=""/>
+			</RadioGroup>
 		</LinearLayout>
 
 	</LinearLayout>
 
-
 </LinearLayout>
+
+
+
 
 
 

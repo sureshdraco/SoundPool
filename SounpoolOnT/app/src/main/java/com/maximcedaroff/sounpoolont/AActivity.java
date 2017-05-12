@@ -2,11 +2,15 @@ package com.maximcedaroff.sounpoolont;
 
 import static com.maximcedaroff.sounpoolont.R.id.container;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import android.content.Intent;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -15,9 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,18 +27,20 @@ import android.widget.Button;
 public class AActivity extends AppCompatActivity {
 
 	private InterstitialAd interstitial;
-
+	private List<StateChangeListener> stateChangeListenerList;
 	private OnSectionsPagerAdapter onSectionsPagerAdapter;
 	OffSectionsPagerAdapter offSectionsPagerAdapter;
 
 	public ViewPager onViewPager, offViewPager;
 	private TabLayout tabLayout, tabLayout2;
 	private SoundPool mySounds;
+	private int currentBeat;
+	private LoopMediaPlayer mp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		stateChangeListenerList = new ArrayList<>();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -55,11 +59,20 @@ public class AActivity extends AppCompatActivity {
 		offViewPager.setAdapter(offSectionsPagerAdapter);
 		tabLayout2 = (TabLayout) findViewById(R.id.tab_layout2);
 		tabLayout2.setupWithViewPager(offViewPager, true);
-
+		onViewPager.setOffscreenPageLimit(3);
+		offViewPager.setOffscreenPageLimit(3);
 		AdView adView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder()
 				.setRequestAgent("android_studio:ad_template").build();
 		// adView.loadAd(adRequest);
+
+		Button menu = (Button) findViewById(R.id.menu);
+		menu.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(AActivity.this, SettingsActivity.class));
+			}
+		});
 
 		final Button b2 = (Button) findViewById(R.id.a2);
 		final Button b1 = (Button) findViewById(R.id.a1);
@@ -87,6 +100,40 @@ public class AActivity extends AppCompatActivity {
 			}
 		});
 
+	}
+
+	public void addStateChangedListener(StateChangeListener stateChangeListener) {
+		stateChangeListenerList.add(stateChangeListener);
+	}
+
+	public void initStateChange(Fragment fragment, boolean state) {
+		for (StateChangeListener stateChangeListener : stateChangeListenerList) {
+			stateChangeListener.onStateChangedListener(fragment, state);
+		}
+	}
+
+	private void startemp(int beat2) {
+		currentBeat = beat2;
+		mp = LoopMediaPlayer.create(getApplicationContext(), beat2);
+	}
+
+	private void releasEmp() {
+		currentBeat = -1;
+		if (mp != null) {
+			mp.release();
+			mp = null;
+		}
+	}
+
+	public void handleBeat(boolean b, int beatInUse) {
+		if (b) {
+			releasEmp();
+			startemp(beatInUse);
+		} else {
+			if (currentBeat == beatInUse) {
+				releasEmp();
+			}
+		}
 	}
 
 	public class OnSectionsPagerAdapter extends FragmentPagerAdapter {
@@ -170,6 +217,11 @@ public class AActivity extends AppCompatActivity {
 		public int getCount() {
 			return 3;
 		}
+	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		releasEmp();
 	}
 }
