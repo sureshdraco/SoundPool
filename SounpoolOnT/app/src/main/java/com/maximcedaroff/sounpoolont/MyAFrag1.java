@@ -5,6 +5,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -140,6 +141,8 @@ public class MyAFrag1 extends Fragment implements StateChangeListener {
 	}
 
 	private boolean handleBtnClick(View view, MotionEvent motionEvent, int s1Id) {
+		Log.d("action", "Action:" + motionEvent.getAction());
+
 		switch (motionEvent.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			mySounds.play(s1Id, 1, 1, 1, 0, 1);
@@ -147,6 +150,7 @@ public class MyAFrag1 extends Fragment implements StateChangeListener {
 			break;
 
 		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_CANCEL:
 			view.setBackgroundResource(R.drawable.button_unpress);
 			break;
 		}

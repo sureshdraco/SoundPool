@@ -149,10 +149,9 @@ public class MyAFrag3 extends Fragment implements StateChangeListener {
 		case MotionEvent.ACTION_DOWN:
 			mySounds.play(s1Id, 1, 1, 1, 0, 1);
 			view.setBackgroundResource(R.drawable.button_press_w);
-
 			break;
-
 		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_CANCEL:
 			view.setBackgroundResource(R.drawable.button_unpress);
 			break;
 		}
