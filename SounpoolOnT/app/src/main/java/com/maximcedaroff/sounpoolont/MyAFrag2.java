@@ -5,15 +5,21 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.ToggleButton;
 
 /**
  * Created by Develop on 02.08.2016.
  */
 public class MyAFrag2 extends Fragment {
 	private SoundPool mySounds;
+	private LoopMediaPlayer mp;
+	private RadioButton toggleButton1, toggleButton2, toggleButton3;
 
 	public static MyAFrag2 newInstance() {
 
@@ -27,7 +33,7 @@ public class MyAFrag2 extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_a1, container, false);
 		return rootView;
 	}
@@ -35,6 +41,19 @@ public class MyAFrag2 extends Fragment {
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		((AActivity) getActivity()).onViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
 		mySounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		final int s1Id = mySounds.load(getContext(), R.raw.s13, 1);
 		final int s2Id = mySounds.load(getContext(), R.raw.s14, 1);
@@ -45,9 +64,6 @@ public class MyAFrag2 extends Fragment {
 		final int s7Id = mySounds.load(getContext(), R.raw.s19, 1);
 		final int s8Id = mySounds.load(getContext(), R.raw.s20, 1);
 		final int s9Id = mySounds.load(getContext(), R.raw.s21, 1);
-		final int s10Id = mySounds.load(getContext(), R.raw.s22, 1);
-		final int s11Id = mySounds.load(getContext(), R.raw.s23, 1);
-		final int s12Id = mySounds.load(getContext(), R.raw.s24, 1);
 		view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -108,23 +124,56 @@ public class MyAFrag2 extends Fragment {
 				mySounds.play(s9Id, 1, 1, 1, 0, 1);
 			}
 		});
-		view.findViewById(R.id.button10).setOnClickListener(new View.OnClickListener() {
+		toggleButton1 = (RadioButton) view.findViewById(R.id.button10);
+		toggleButton2 = (RadioButton) view.findViewById(R.id.button11);
+		toggleButton3 = (RadioButton) view.findViewById(R.id.button12);
+		toggleButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View v) {
-				mySounds.play(s10Id, 1, 1, 1, 0, 1);
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				if (b) {
+					releasEmp();
+					startemp(R.raw.beat1);
+				} else {
+					releasEmp();
+				}
 			}
 		});
-		view.findViewById(R.id.button11).setOnClickListener(new View.OnClickListener() {
+		toggleButton2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View v) {
-				mySounds.play(s11Id, 1, 1, 1, 0, 1);
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+				if (b) {
+					releasEmp();
+					startemp(R.raw.beat3);
+				} else {
+					releasEmp();
+				}
 			}
 		});
-		view.findViewById(R.id.button12).setOnClickListener(new View.OnClickListener() {
+		toggleButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View v) {
-				mySounds.play(s12Id, 1, 1, 1, 0, 1);
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				if (b) {
+					releasEmp();
+					startemp(R.raw.beat1);
+				} else {
+					releasEmp();
+				}
 			}
 		});
+	}
+
+	private void startemp(int beat2) {
+		mp = LoopMediaPlayer.create(getContext(), beat2);
+		if (mp == null) {
+			return;
+		}
+	}
+
+	private void releasEmp() {
+		if (mp != null) {
+			mp.release();
+			mp = null;
+		}
 	}
 }

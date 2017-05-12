@@ -29,7 +29,7 @@ public class AActivity extends AppCompatActivity {
 	private OnSectionsPagerAdapter onSectionsPagerAdapter;
 	OffSectionsPagerAdapter offSectionsPagerAdapter;
 
-	private ViewPager onViewPager, offViewPager;
+	public ViewPager onViewPager, offViewPager;
 	private TabLayout tabLayout, tabLayout2;
 	private SoundPool mySounds;
 
