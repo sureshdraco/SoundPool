@@ -1,15 +1,5 @@
 package com.maximcedaroff.sounpoolont;
 
-import static com.maximcedaroff.sounpoolont.R.id.container;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-
 import android.content.Intent;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -23,6 +13,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.maximcedaroff.sounpoolont.R.id.container;
 
 public class AActivity extends AppCompatActivity {
 
@@ -64,7 +64,7 @@ public class AActivity extends AppCompatActivity {
 		AdView adView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder()
 				.setRequestAgent("android_studio:ad_template").build();
-		// adView.loadAd(adRequest);
+		adView.loadAd(adRequest);
 
 		Button menu = (Button) findViewById(R.id.menu);
 		menu.setOnClickListener(new View.OnClickListener() {
@@ -145,25 +145,24 @@ public class AActivity extends AppCompatActivity {
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
-			case 0:
-				return MyAFrag1.newInstance();
-			case 1:
-				return MyAFrag2.newInstance();
-			case 2:
-
-				interstitial = new InterstitialAd(getApplicationContext());
-				interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
-				AdRequest adRequest = new AdRequest.Builder().build();
-				// interstitial.loadAd(adRequest);
-				interstitial.setAdListener(new AdListener() {
-					@Override
-					public void onAdLoaded() {
-						if (interstitial.isLoaded()) {
-							interstitial.show();
+				case 0:
+					return MyAFrag1.newInstance();
+				case 1:
+					return MyAFrag2.newInstance();
+				case 2:
+					interstitial = new InterstitialAd(getApplicationContext());
+					interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
+					AdRequest adRequest = new AdRequest.Builder().build();
+					interstitial.loadAd(adRequest);
+					interstitial.setAdListener(new AdListener() {
+						@Override
+						public void onAdLoaded() {
+							if (interstitial.isLoaded()) {
+								interstitial.show();
+							}
 						}
-					}
-				});
-				return MyAFrag3.newInstance();
+					});
+					return MyAFrag3.newInstance();
 			}
 
 			return null;
@@ -185,28 +184,27 @@ public class AActivity extends AppCompatActivity {
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
-			case 0:
-				return MyBFrag1.newInstance();
-			case 1:
-				return MyBFrag2.newInstance();
-			case 2:
+				case 0:
+					return MyBFrag1.newInstance();
+				case 1:
+					return MyBFrag2.newInstance();
+				case 2:
 
-				interstitial = new InterstitialAd(getApplicationContext());
-				interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
-				AdRequest adRequest = new AdRequest.Builder().build();
-				// interstitial.loadAd(adRequest);
-				interstitial.setAdListener(new AdListener() {
-					@Override
-					public void onAdLoaded() {
-						if (interstitial.isLoaded()) {
-							interstitial.show();
+					interstitial = new InterstitialAd(getApplicationContext());
+					interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
+					AdRequest adRequest = new AdRequest.Builder().build();
+					interstitial.loadAd(adRequest);
+					interstitial.setAdListener(new AdListener() {
+						@Override
+						public void onAdLoaded() {
+							if (interstitial.isLoaded()) {
+								interstitial.show();
+
+							}
 
 						}
-
-					}
-				});
-
-				return MyBFrag3.newInstance();
+					});
+					return MyBFrag3.newInstance();
 
 			}
 
