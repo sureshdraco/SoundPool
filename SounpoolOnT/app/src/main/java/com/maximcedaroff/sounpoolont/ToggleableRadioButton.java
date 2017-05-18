@@ -22,11 +22,10 @@ public class ToggleableRadioButton extends android.support.v7.widget.AppCompatRa
 	@Override
 	public void toggle() {
 		if (isChecked()) {
-			if (getParent() instanceof RadioGroup) {
-				((RadioGroup) getParent()).clearCheck();
-			}
+			((RadioGroup) getParent()).clearCheck();
 		} else {
+			((RadioGroup) getParent()).clearCheck();
 			setChecked(true);
 		}
 	}
-} 
+}

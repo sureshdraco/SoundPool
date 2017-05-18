@@ -36,7 +36,8 @@ public class AActivity extends AppCompatActivity {
 	private SoundPool mySounds;
 	private int currentBeat;
 	private LoopMediaPlayer mp;
-	int scrollCounter = 1;
+	int scrollCounterPage1 = 1;
+	private ArrayList<Fragment> onFragments, offFragments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class AActivity extends AppCompatActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_a);
+		initFragments();
 		onSectionsPagerAdapter = new OnSectionsPagerAdapter(getSupportFragmentManager());
 		interstitial = new InterstitialAd(getApplicationContext());
 		interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
@@ -82,7 +84,6 @@ public class AActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				handleScrollCounter();
 			}
 
 			@Override
@@ -107,7 +108,6 @@ public class AActivity extends AppCompatActivity {
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				handleScrollCounter();
 				findViewById(R.id.offLayout).setVisibility(View.VISIBLE);
 				findViewById(R.id.onLayout).setVisibility(View.GONE);
 				tabLayout.setVisibility(View.GONE);
@@ -120,7 +120,6 @@ public class AActivity extends AppCompatActivity {
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				handleScrollCounter();
 				findViewById(R.id.onLayout).setVisibility(View.VISIBLE);
 				findViewById(R.id.offLayout).setVisibility(View.GONE);
 				tabLayout2.setVisibility(View.GONE);
@@ -132,11 +131,22 @@ public class AActivity extends AppCompatActivity {
 
 	}
 
+	private void initFragments() {
+		onFragments = new ArrayList<>();
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag2.newInstance());
+		onFragments.add(MyAFrag3.newInstance());
+		offFragments = new ArrayList<>();
+		offFragments.add(MyBFrag1.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+	}
+
 	private void handleScrollCounter() {
-		scrollCounter++;
-		if (scrollCounter % 3 == 0) {
+		scrollCounterPage1++;
+		if (scrollCounterPage1 == 3 || scrollCounterPage1 == 6 || scrollCounterPage1 == 9) {
 			AdRequest adRequest = new AdRequest.Builder().build();
-			interstitial.loadAd(adRequest);
+//			interstitial.loadAd(adRequest);
 			interstitial.setAdListener(new AdListener() {
 				@Override
 				public void onAdLoaded() {
@@ -182,6 +192,10 @@ public class AActivity extends AppCompatActivity {
 		}
 	}
 
+	public int getCurrentBeat() {
+		return currentBeat;
+	}
+
 	public class OnSectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public OnSectionsPagerAdapter(FragmentManager fm) {
@@ -190,21 +204,11 @@ public class AActivity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			switch (position) {
-				case 0:
-					return MyAFrag1.newInstance();
-				case 1:
-					return MyAFrag2.newInstance();
-				case 2:
-					return MyAFrag3.newInstance();
-			}
-
-			return null;
-
+			return onFragments.get(position);
 		}
 
 		public int getCount() {
-			return 3;
+			return onFragments.size();
 		}
 
 	}
@@ -217,22 +221,11 @@ public class AActivity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			switch (position) {
-				case 0:
-					return MyBFrag1.newInstance();
-				case 1:
-					return MyBFrag2.newInstance();
-				case 2:
-					return MyBFrag3.newInstance();
-
-			}
-
-			return null;
-
+			return offFragments.get(position);
 		}
 
 		public int getCount() {
-			return 3;
+			return offFragments.size();
 		}
 	}
 
