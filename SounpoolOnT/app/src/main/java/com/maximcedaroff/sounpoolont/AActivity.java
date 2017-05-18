@@ -36,6 +36,7 @@ public class AActivity extends AppCompatActivity {
 	private SoundPool mySounds;
 	private int currentBeat;
 	private LoopMediaPlayer mp;
+	int scrollCounter = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,10 @@ public class AActivity extends AppCompatActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		setContentView(R.layout.activity_a);
-
 		onSectionsPagerAdapter = new OnSectionsPagerAdapter(getSupportFragmentManager());
-
+		interstitial = new InterstitialAd(getApplicationContext());
+		interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 		onViewPager = (ViewPager) findViewById(container);
 		onViewPager.setAdapter(onSectionsPagerAdapter);
 		offSectionsPagerAdapter = new OffSectionsPagerAdapter(getSupportFragmentManager());
@@ -61,6 +61,34 @@ public class AActivity extends AppCompatActivity {
 		tabLayout2.setupWithViewPager(offViewPager, true);
 		onViewPager.setOffscreenPageLimit(3);
 		offViewPager.setOffscreenPageLimit(3);
+		offViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				handleScrollCounter();
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
+		onViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				handleScrollCounter();
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
 		AdView adView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.Builder()
 				.setRequestAgent("android_studio:ad_template").build();
@@ -79,6 +107,7 @@ public class AActivity extends AppCompatActivity {
 		b2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				handleScrollCounter();
 				findViewById(R.id.offLayout).setVisibility(View.VISIBLE);
 				findViewById(R.id.onLayout).setVisibility(View.GONE);
 				tabLayout.setVisibility(View.GONE);
@@ -91,6 +120,7 @@ public class AActivity extends AppCompatActivity {
 		b1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				handleScrollCounter();
 				findViewById(R.id.onLayout).setVisibility(View.VISIBLE);
 				findViewById(R.id.offLayout).setVisibility(View.GONE);
 				tabLayout2.setVisibility(View.GONE);
@@ -100,6 +130,22 @@ public class AActivity extends AppCompatActivity {
 			}
 		});
 
+	}
+
+	private void handleScrollCounter() {
+		scrollCounter++;
+		if (scrollCounter % 3 == 0) {
+			AdRequest adRequest = new AdRequest.Builder().build();
+			interstitial.loadAd(adRequest);
+			interstitial.setAdListener(new AdListener() {
+				@Override
+				public void onAdLoaded() {
+					if (interstitial.isLoaded()) {
+						interstitial.show();
+					}
+				}
+			});
+		}
 	}
 
 	public void addStateChangedListener(StateChangeListener stateChangeListener) {
@@ -150,18 +196,6 @@ public class AActivity extends AppCompatActivity {
 				case 1:
 					return MyAFrag2.newInstance();
 				case 2:
-					interstitial = new InterstitialAd(getApplicationContext());
-					interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
-					AdRequest adRequest = new AdRequest.Builder().build();
-					interstitial.loadAd(adRequest);
-					interstitial.setAdListener(new AdListener() {
-						@Override
-						public void onAdLoaded() {
-							if (interstitial.isLoaded()) {
-								interstitial.show();
-							}
-						}
-					});
 					return MyAFrag3.newInstance();
 			}
 
@@ -189,21 +223,6 @@ public class AActivity extends AppCompatActivity {
 				case 1:
 					return MyBFrag2.newInstance();
 				case 2:
-
-					interstitial = new InterstitialAd(getApplicationContext());
-					interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
-					AdRequest adRequest = new AdRequest.Builder().build();
-					interstitial.loadAd(adRequest);
-					interstitial.setAdListener(new AdListener() {
-						@Override
-						public void onAdLoaded() {
-							if (interstitial.isLoaded()) {
-								interstitial.show();
-
-							}
-
-						}
-					});
 					return MyBFrag3.newInstance();
 
 			}
