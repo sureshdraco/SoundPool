@@ -12,17 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 /**
  * Created by Develop on 02.08.2016.
  */
-public class MyBFrag3 extends Fragment {
+public class MyBFrag3 extends Fragment implements StateChangeListener {
 
 
 	private SoundPool mySounds;
 	private LoopMediaPlayer mp;
 	private RadioButton toggleButton1, toggleButton2, toggleButton3;
 	private int currentBeat = -1;
+	private AActivity aActivity;
 
 	public static MyBFrag3 newInstance() {
 
@@ -44,7 +46,9 @@ public class MyBFrag3 extends Fragment {
 	@Override
 	public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		((AActivity) getActivity()).onViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		aActivity = (AActivity) getActivity();
+		aActivity.addStateChangedListener(this);
+		aActivity.onViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 			}
@@ -71,12 +75,6 @@ public class MyBFrag3 extends Fragment {
 		final int s7Id = mySounds.load(getContext(), R.raw.s42, 1);
 		final int s8Id = mySounds.load(getContext(), R.raw.s39, 1);
 		final int s9Id = mySounds.load(getContext(), R.raw.s4, 1);
-		view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mySounds.play(s1Id, 1, 1, 1, 0, 1);
-			}
-		});
 		view.findViewById(R.id.button1).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -138,21 +136,24 @@ public class MyBFrag3 extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 				int beatInUse = R.raw.beat16;
-				handleBeat(b, beatInUse);
+				aActivity.initStateChange(MyBFrag3.this, b);
+				aActivity.handleBeat(b, beatInUse);
 			}
 		});
 		toggleButton2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 				int beatInUse = R.raw.beat17;
-				handleBeat(b, beatInUse);
+				aActivity.initStateChange(MyBFrag3.this, b);
+				aActivity.handleBeat(b, beatInUse);
 			}
 		});
 		toggleButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 				int beatInUse = R.raw.beat18;
-				handleBeat(b, beatInUse);
+				aActivity.initStateChange(MyBFrag3.this, b);
+				aActivity.handleBeat(b, beatInUse);
 			}
 		});
 	}
@@ -166,6 +167,7 @@ public class MyBFrag3 extends Fragment {
 				break;
 
 			case MotionEvent.ACTION_UP:
+			case MotionEvent.ACTION_CANCEL:
 				view.setBackgroundResource(R.drawable.buttonb_unpress);
 				break;
 		}
@@ -188,25 +190,22 @@ public class MyBFrag3 extends Fragment {
 		mp = LoopMediaPlayer.create(getContext(), beat2);
 	}
 
-	private void dupStart(int beat2) {
-//		if (mp != null && mp.getCurrentPlayer() != null) {
-//			releasEmp();
-//			mp = LoopMediaPlayer.create(getContext(), beat2);
-//		}
-	}
-
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		releasEmp();
-	}
-
 	private void releasEmp() {
 		currentBeat = -1;
 		if (mp != null) {
 			mp.release();
 			mp = null;
+		}
+	}
+
+	@Override
+	public void onStateChangedListener(Fragment fragment, boolean state) {
+		if (fragment != this && state && getView() != null) {
+			int checkedId = ((RadioGroup) getView().findViewById(R.id.toggleGroup)).getCheckedRadioButtonId();
+			if (checkedId == -1) {
+				return;
+			}
+			((RadioButton) getView().findViewById(checkedId)).setChecked(false);
 		}
 	}
 }
