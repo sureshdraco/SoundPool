@@ -1,5 +1,15 @@
 package com.maximcedaroff.sounpoolont;
 
+import static com.maximcedaroff.sounpoolont.R.id.container;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import android.content.Intent;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -14,16 +24,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.maximcedaroff.sounpoolont.R.id.container;
-
 public class AActivity extends AppCompatActivity {
 
 	private InterstitialAd interstitial;
@@ -36,7 +36,6 @@ public class AActivity extends AppCompatActivity {
 	private SoundPool mySounds;
 	private int currentBeat;
 	private LoopMediaPlayer mp;
-	int scrollCounterPage1 = 1;
 	private ArrayList<Fragment> onFragments, offFragments;
 
 	@Override
@@ -70,7 +69,7 @@ public class AActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				handleScrollCounter();
+				handleAd(position);
 			}
 
 			@Override
@@ -84,6 +83,7 @@ public class AActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
+				handleAd(position);
 			}
 
 			@Override
@@ -131,22 +131,10 @@ public class AActivity extends AppCompatActivity {
 
 	}
 
-	private void initFragments() {
-		onFragments = new ArrayList<>();
-		onFragments.add(MyAFrag1.newInstance());
-		onFragments.add(MyAFrag2.newInstance());
-		onFragments.add(MyAFrag3.newInstance());
-		offFragments = new ArrayList<>();
-		offFragments.add(MyBFrag1.newInstance());
-		offFragments.add(MyBFrag3.newInstance());
-		offFragments.add(MyBFrag3.newInstance());
-	}
-
-	private void handleScrollCounter() {
-		scrollCounterPage1++;
-		if (scrollCounterPage1 == 3 || scrollCounterPage1 == 6 || scrollCounterPage1 == 9) {
+	private void handleAd(int position) {
+		if (position == 2 || position == 5 || position == 8) {
 			AdRequest adRequest = new AdRequest.Builder().build();
-//			interstitial.loadAd(adRequest);
+			interstitial.loadAd(adRequest);
 			interstitial.setAdListener(new AdListener() {
 				@Override
 				public void onAdLoaded() {
@@ -156,6 +144,29 @@ public class AActivity extends AppCompatActivity {
 				}
 			});
 		}
+	}
+
+	private void initFragments() {
+		onFragments = new ArrayList<>();
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag2.newInstance());
+		onFragments.add(MyAFrag3.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		onFragments.add(MyAFrag1.newInstance());
+		offFragments = new ArrayList<>();
+		offFragments.add(MyBFrag1.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag1.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag1.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
+		offFragments.add(MyBFrag3.newInstance());
 	}
 
 	public void addStateChangedListener(StateChangeListener stateChangeListener) {
