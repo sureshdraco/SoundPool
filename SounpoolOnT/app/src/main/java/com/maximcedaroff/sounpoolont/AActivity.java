@@ -1,6 +1,7 @@
 package com.maximcedaroff.sounpoolont;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -37,14 +38,15 @@ public class AActivity extends AppCompatActivity {
 
 	public ViewPager onViewPager, offViewPager;
 	private TabLayout tabLayout, tabLayout2;
-	private SoundPool mySounds;
 	private int currentBeat;
 	private LoopMediaPlayer mp;
 	private ArrayList<Fragment> onFragments, offFragments;
+	private SoundPool mySounds;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mySounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		stateChangeListenerList = new ArrayList<>();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -141,6 +143,21 @@ public class AActivity extends AppCompatActivity {
 				showAd();
 			}
 		}
+	}
+
+	public void playSound(final int sound) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mySounds.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+					@Override
+					public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+						soundPool.play(i, 1, 1, 1, 0, 1);
+					}
+				});
+				mySounds.load(getApplicationContext(), sound, 1);
+			}
+		}).start();
 	}
 
 	private void handleAdB(int position) {

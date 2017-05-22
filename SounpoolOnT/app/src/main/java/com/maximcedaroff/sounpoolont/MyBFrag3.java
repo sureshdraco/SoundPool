@@ -1,7 +1,5 @@
 package com.maximcedaroff.sounpoolont;
 
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,10 +18,7 @@ import android.widget.RadioGroup;
 public class MyBFrag3 extends Fragment implements StateChangeListener {
 
 
-	private SoundPool mySounds;
-	private LoopMediaPlayer mp;
 	private RadioButton toggleButton1, toggleButton2, toggleButton3;
-	private int currentBeat = -1;
 	private AActivity aActivity;
 
 	public static MyBFrag3 newInstance() {
@@ -65,68 +60,58 @@ public class MyBFrag3 extends Fragment implements StateChangeListener {
 			public void onPageScrollStateChanged(int state) {
 			}
 		});
-		mySounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-		final int s1Id = mySounds.load(getContext(), R.raw.s21, 1);
-		final int s2Id = mySounds.load(getContext(), R.raw.s27, 1);
-		final int s3Id = mySounds.load(getContext(), R.raw.s8, 1);
-		final int s4Id = mySounds.load(getContext(), R.raw.s19, 1);
-		final int s5Id = mySounds.load(getContext(), R.raw.s28, 1);
-		final int s6Id = mySounds.load(getContext(), R.raw.s33, 1);
-		final int s7Id = mySounds.load(getContext(), R.raw.s42, 1);
-		final int s8Id = mySounds.load(getContext(), R.raw.s39, 1);
-		final int s9Id = mySounds.load(getContext(), R.raw.s4, 1);
 		view.findViewById(R.id.button1).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s1Id);
+				return handleBtnClick(view, motionEvent, R.raw.s21);
 			}
 		});
 		view.findViewById(R.id.button2).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s2Id);
+				return handleBtnClick(view, motionEvent, R.raw.s27);
 			}
 		});
 		view.findViewById(R.id.button3).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s3Id);
+				return handleBtnClick(view, motionEvent, R.raw.s8);
 			}
 		});
 		view.findViewById(R.id.button4).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s4Id);
+				return handleBtnClick(view, motionEvent, R.raw.s19);
 			}
 		});
 		view.findViewById(R.id.button5).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s5Id);
+				return handleBtnClick(view, motionEvent, R.raw.s28);
 			}
 		});
 		view.findViewById(R.id.button6).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s6Id);
+				return handleBtnClick(view, motionEvent, R.raw.s33);
 			}
 		});
 		view.findViewById(R.id.button7).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s7Id);
+				return handleBtnClick(view, motionEvent, R.raw.s42);
 			}
 		});
 		view.findViewById(R.id.button8).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s8Id);
+				return handleBtnClick(view, motionEvent, R.raw.s39);
 			}
 		});
 		view.findViewById(R.id.button9).setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View view, MotionEvent motionEvent) {
-				return handleBtnClick(view, motionEvent, s9Id);
+				return handleBtnClick(view, motionEvent, R.raw.s4);
 			}
 		});
 		toggleButton1 = (RadioButton) view.findViewById(R.id.button10);
@@ -161,41 +146,15 @@ public class MyBFrag3 extends Fragment implements StateChangeListener {
 	private boolean handleBtnClick(View view, MotionEvent motionEvent, int s1Id) {
 		switch (motionEvent.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				mySounds.play(s1Id, 1, 1, 1, 0, 1);
+				aActivity.playSound(s1Id);
 				view.setBackgroundResource(R.drawable.buttonb_press_w);
-
 				break;
-
 			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_CANCEL:
 				view.setBackgroundResource(R.drawable.buttonb_unpress);
 				break;
 		}
 		return true;
-	}
-
-	private void handleBeat(boolean b, int beatInUse) {
-		if (b) {
-			releasEmp();
-			startemp(beatInUse);
-		} else {
-			if (currentBeat == beatInUse) {
-				releasEmp();
-			}
-		}
-	}
-
-	private void startemp(int beat2) {
-		currentBeat = beat2;
-		mp = LoopMediaPlayer.create(getContext(), beat2);
-	}
-
-	private void releasEmp() {
-		currentBeat = -1;
-		if (mp != null) {
-			mp.release();
-			mp = null;
-		}
 	}
 
 	@Override
