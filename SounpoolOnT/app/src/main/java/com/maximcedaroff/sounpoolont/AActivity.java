@@ -1,15 +1,5 @@
 package com.maximcedaroff.sounpoolont;
 
-import static com.maximcedaroff.sounpoolont.R.id.container;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-
 import android.content.Intent;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -24,8 +14,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.maximcedaroff.sounpoolont.R.id.container;
+
 public class AActivity extends AppCompatActivity {
 
+	private Set<Integer> adShownA = new HashSet<>();
+	private Set<Integer> adShownB = new HashSet<>();
 	private InterstitialAd interstitial;
 	private List<StateChangeListener> stateChangeListenerList;
 	private OnSectionsPagerAdapter onSectionsPagerAdapter;
@@ -69,7 +73,7 @@ public class AActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				handleAd(position);
+				handleAdA(position);
 			}
 
 			@Override
@@ -83,7 +87,7 @@ public class AActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				handleAd(position);
+				handleAdB(position);
 			}
 
 			@Override
@@ -131,19 +135,33 @@ public class AActivity extends AppCompatActivity {
 
 	}
 
-	private void handleAd(int position) {
+	private void handleAdA(int position) {
 		if (position == 2 || position == 5 || position == 8) {
-			AdRequest adRequest = new AdRequest.Builder().build();
-			interstitial.loadAd(adRequest);
-			interstitial.setAdListener(new AdListener() {
-				@Override
-				public void onAdLoaded() {
-					if (interstitial.isLoaded()) {
-						interstitial.show();
-					}
-				}
-			});
+			if (adShownA.add(position)) {
+				showAd();
+			}
 		}
+	}
+
+	private void handleAdB(int position) {
+		if (position == 2 || position == 5 || position == 8) {
+			if (adShownB.add(position)) {
+				showAd();
+			}
+		}
+	}
+
+	private void showAd() {
+		AdRequest adRequest = new AdRequest.Builder().build();
+		interstitial.loadAd(adRequest);
+		interstitial.setAdListener(new AdListener() {
+			@Override
+			public void onAdLoaded() {
+				if (interstitial.isLoaded()) {
+					interstitial.show();
+				}
+			}
+		});
 	}
 
 	private void initFragments() {
