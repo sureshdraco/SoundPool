@@ -1,5 +1,17 @@
 package com.maximcedaroff.sounpoolont;
 
+import static com.maximcedaroff.sounpoolont.R.id.container;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -14,18 +26,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static com.maximcedaroff.sounpoolont.R.id.container;
 
 public class AActivity extends AppCompatActivity {
 
@@ -146,18 +146,22 @@ public class AActivity extends AppCompatActivity {
 	}
 
 	public void playSound(final int sound) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				mySounds.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-					@Override
-					public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-						soundPool.play(i, 1, 1, 1, 0, 1);
-					}
-				});
-				mySounds.load(getApplicationContext(), sound, 1);
-			}
-		}).start();
+		try {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mySounds.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+						@Override
+						public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+							soundPool.play(i, 1, 1, 1, 0, 1);
+							mySounds.unload(i);
+						}
+					});
+					mySounds.load(getApplicationContext(), sound, 1);
+				}
+			}).start();
+		} catch (Exception e) {
+		}
 	}
 
 	private void handleAdB(int position) {
