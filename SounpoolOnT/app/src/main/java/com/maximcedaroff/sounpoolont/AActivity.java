@@ -14,6 +14,7 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -41,12 +42,10 @@ public class AActivity extends AppCompatActivity {
 	private int currentBeat;
 	private LoopMediaPlayer mp;
 	private ArrayList<Fragment> onFragments, offFragments;
-	private SoundPool mySounds;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mySounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		stateChangeListenerList = new ArrayList<>();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -146,22 +145,14 @@ public class AActivity extends AppCompatActivity {
 	}
 
 	public void playSound(final int sound) {
-		try {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					mySounds.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-						@Override
-						public void onLoadComplete(SoundPool soundPool, int i, int i1) {
-							soundPool.play(i, 1, 1, 1, 0, 1);
-							mySounds.unload(i);
-						}
-					});
-					mySounds.load(getApplicationContext(), sound, 1);
-				}
-			}).start();
-		} catch (Exception e) {
-		}
+		MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), sound);
+		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				mp.release();
+			}
+		});
+		mediaPlayer.start();
 	}
 
 	private void handleAdB(int position) {
